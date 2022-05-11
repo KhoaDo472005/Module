@@ -3,7 +3,7 @@ module.exports.config = {
   version: "1.0.0",
   hasPermssion: 0,
   credits: "Khoa",
-  description: "Ông bot bà nguyệt se duyên :>",
+  description: "",
   commandCategory: "Giải trí",
   usages: "",
   dependencies: {
