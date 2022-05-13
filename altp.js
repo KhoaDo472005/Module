@@ -140,7 +140,7 @@ module.exports.run = async function ({ api, event, args, Currencies, Users}) {
         fs.unlinkSync(__dirname + "/cache/question.png")
       })
        return request(linkanh).pipe(fs.createWriteStream(__dirname + `/cache/question.png`)).on("close",() => callback());
-     }
+    }
     catch (error) {
       return api.sendMessage("Đã xảy ra lỗi!", threadID, messageID)
     }
