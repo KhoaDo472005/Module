@@ -36,27 +36,27 @@ function equi(level) {
 
 module.exports.handleReply = async function ({ event, Users, api, handleReply, Currencies }) {
   if (handleReply.type == "answer") {
-	  var { threadID, messageID, senderID } = event;
-	  if (senderID !== handleReply.author) return api.sendMessage("Chỗ người khác đang chơi vô duyên thế -.-", threadID, messageID);
-	  var name = await Users.getNameUser(senderID);
-	  var senderInfo = await Users.getData(senderID);
+    var { threadID, messageID, senderID } = event;
+    if (senderID !== handleReply.author) return api.sendMessage("Chỗ người khác đang chơi vô duyên thế -.-", threadID, messageID);
+    var name = await Users.getNameUser(senderID);
+    var senderInfo = await Users.getData(senderID);
     var choose = event.body.toUpperCase();
-	  if (choose !== "A" && choose !== "B" && choose !== "C" && choose !== "D") return api.sendMessage("Câu trả lời của bạn đéo hợp lệ!",threadID, messageID);
-	  if (choose == handleReply.dapandung) {
-	    var levelcc = handleReply.level + 1;
-	    if (levelcc < 15) {
-	      if (levelcc == 1) { var djtme = "câu hỏi đầu tiên"; } else var djtme = `câu hỏi số ${cauhoi}`;
+    if (choose !== "A" && choose !== "B" && choose !== "C" && choose !== "D") return api.sendMessage("Câu trả lời của bạn đéo hợp lệ!",threadID, messageID);
+    if (choose == handleReply.dapandung) {
+      var levelcc = handleReply.level + 1;
+      if (levelcc < 15) {
+        if (levelcc == 1) { var djtme = "câu hỏi đầu tiên"; } else var djtme = `câu hỏi số ${cauhoi}`;
         senderInfo.data.altp = { level: levelcc };
         await Users.setData(senderID, senderInfo);
         return api.sendMessage(`${choose} là đáp án chính xác, ${handleReply.giaithich}\n\nXin chúc mừng người chơi ${name} đã xuất sắc trả lời đúng câu hỏi ${djtme} nâng mức phần thưởng lên ${equi(levelcc)}$`, threadID, messageID);
-	    } else if (levelcc == 15) {
+      } else if (levelcc == 15) {
         var tienthuong = 250000;
         Currencies.increaseMoney(senderID, tienthuong);
         senderInfo.data.altp = { level: -1 };
         await Users.setData(senderID, senderInfo);
         return api.sendMessage(`${choose} là đáp án chính xác, ${handleReply.giaithich}\n\nXin chúc mừng người chơi ${name} đã xuất sắc vượt qua 15 câu hỏi của chương trình mang về ${tienthuong}$\nHẹn gặp lại bạn ở chương trình lần sau!`, threadID, messageID);
-	    }
-	  } else {
+      }
+    } else {
       var level = handleReply.level;
       if (level > 5 && level < 10) { var tienthuong = 2000; } else if (level > 10) { var tienthuong = 22000; } else var tienthuong = 0;
       senderInfo.data.altp = { level: -1 };
@@ -66,11 +66,11 @@ module.exports.handleReply = async function ({ event, Users, api, handleReply, C
       if (moc == "đầu tiên" || moc == "thứ hai") {
         Currencies.increaseMoney(senderID,tienthuong);
         return api.sendMessage(`${choose} là đáp án không chính xác, câu trả lời đúng của chúng ta là ${handleReply.dapandung}, ${handleReply.giaithich}\n\nNgười chơi của chúng ta đã trả lời sai và ra về với phần thưởng ở mốc ${moc} là ${tienthuong}$\nCảm ơn bạn đã tham gia chương trình, hẹn gặp lại bạn ở chương trình lần sau`, threadID, messageID);
-	    } else {
-	      return api.sendMessage(`${choose} là đáp án không chính xác, câu trả lời đúng của chúng ta là ${handleReply.dapandung}, ${handleReply.giaithich}\n\nCảm ơn bạn đã tham gia chương trình, hẹn gặp lại bạn ở chương trình lần sau!`, threadID, messageID); 
-	    }
+      } else {
+        return api.sendMessage(`${choose} là đáp án không chính xác, câu trả lời đúng của chúng ta là ${handleReply.dapandung}, ${handleReply.giaithich}\n\nCảm ơn bạn đã tham gia chương trình, hẹn gặp lại bạn ở chương trình lần sau!`, threadID, messageID); 
+      }
     }
-  };
+  }
 }
 
 module.exports.run = async function ({ api, event, args, Currencies, Users}) {
