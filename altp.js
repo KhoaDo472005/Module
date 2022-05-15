@@ -42,10 +42,10 @@ module.exports.handleReply = async function ({ event, Users, api, handleReply, C
     var senderInfo = await Users.getData(senderID);
     var choose = event.body.toUpperCase();
     if (choose !== "A" && choose !== "B" && choose !== "C" && choose !== "D") return api.sendMessage("Câu trả lời của bạn đéo hợp lệ!",threadID, messageID);
-    if (choose == handleReply.dapandung) {
+    if (choose === handleReply.dapandung) {
       var levelcc = handleReply.level + 1;
       if (levelcc < 15) {
-        if (levelcc == 1) { var djtme = "câu hỏi đầu tiên"; } else var djtme = `câu hỏi số ${cauhoi}`;
+        if (levelcc == 1) { djtme = "câu hỏi đầu tiên"; } else djtme = `câu hỏi số ${levelcc}`;
         senderInfo.data.altp = { level: levelcc };
         await Users.setData(senderID, senderInfo);
         return api.sendMessage(`${choose} là đáp án chính xác, ${handleReply.giaithich}\n\nXin chúc mừng người chơi ${name} đã xuất sắc trả lời đúng câu hỏi ${djtme} nâng mức phần thưởng lên ${equi(levelcc)}$`, threadID, messageID);
