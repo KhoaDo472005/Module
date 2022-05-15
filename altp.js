@@ -86,13 +86,17 @@ module.exports.run = async function ({ api, event, args, Currencies, Users}) {
   if (type !== "register" && type !== "play" && type !== "info" && type !== "stop") return api.sendMessage(msg, threadID, messageID);
   
   if (type == "register") {
+    const path1 = __dirname + '/cache/intro.png';
+    if (!fs.existsSync(path1)) {
+      var down = (await axios.get("https://i.postimg.cc/1txB8Z3v/intro.png", { responseType: "arraybuffer" })).data;
+      fs.writeFileSync(path1, Buffer.from(down, "utf-8"));
+    };
     if (senderInfo.data.altp && senderInfo.data.altp.level !== -1) return api.sendMessage("Bạn đã đăng kí rồi, vui lòng vượt qua hết câu hỏi hoặc dừng cuộc chơi để có thể đăng kí lại!", threadID, messageID);
     if (money < moneydown) return api.sendMessage(`Bạn không có đủ ${moneydown} để đăng kí, vui lòng theo thầy Huấn làm ăn bươn chải!`, threadID, messageID);
-    request("https://i.postimg.cc/1txB8Z3v/intro.png").pipe(fs.createWriteStream(__dirname + `/cache/intro.png`));
     Currencies.decreaseMoney(senderID, moneydown);
     senderInfo.data.altp = { level: 0 };
     await Users.setData(senderID, senderInfo);
-    return api.sendMessage({ body: "Đăng kí thành công, chào mừng bạn đến với chương trình Ai Là Triệu Phú!" , attachment: fs.createReadStream(__dirname + `/cache/intro.png`)}, threadID, () => fs.unlinkSync(__dirname + `/cache/intro.png`), messageID);
+    return api.sendMessage({ body: "Đăng kí thành công, chào mừng bạn đến với chương trình Ai Là Triệu Phú!" , attachment: fs.createReadStream(path1)}, threadID, () => fs.unlinkSync(path1), messageID);
   };
   
   if (type == "stop") {
@@ -106,12 +110,16 @@ module.exports.run = async function ({ api, event, args, Currencies, Users}) {
   };
   
   if (type == "info") {
-    request("https://i.postimg.cc/D0nccdss/info.png").pipe(fs.createWriteStream(__dirname + `/cache/info.png`));
-    if (!senderInfo.data.altp || senderInfo.data.altp.level == -1) return api.sendMessage({ body: `Bạn chưa đăng kí, dùng ${prefix}altp register để đăng kí nhé! (tốn ${moneydown}$)`, attachment: fs.createReadStream(__dirname + `/cache/info.png`)}, threadID, () => fs.unlinkSync(__dirname + `/cache/info.png`), messageID);
+    const path2 = __dirname + '/cache/info.png';
+    if (!fs.existsSync(path2)) {
+      var down = (await axios.get("https://i.postimg.cc/D0nccdss/info.png", { responseType: "arraybuffer" })).data;
+      fs.writeFileSync(path2, Buffer.from(down, "utf-8"));
+    };
+    if (!senderInfo.data.altp || senderInfo.data.altp.level == -1) return api.sendMessage({ body: `Bạn chưa đăng kí, dùng ${prefix}altp register để đăng kí nhé! (tốn ${moneydown}$)`, attachment: fs.createReadStream(path2)}, threadID, () => fs.unlinkSync(path2), messageID);
     var level = senderInfo.data.altp.level;
-    if (level == 0) return api.sendMessage({ body: `Bạn chưa vượt qua câu hỏi nào, dùng ${prefix}altp play để chơi nhé!`, attachment: fs.createReadStream(__dirname + `/cache/info.png`)}, threadID, () => fs.unlinkSync(__dirname + `/cache/info.png`), messageID);
+    if (level == 0) return api.sendMessage({ body: `Bạn chưa vượt qua câu hỏi nào, dùng ${prefix}altp play để chơi nhé!`, attachment: fs.createReadStream(path2)}, threadID, () => fs.unlinkSync(path2), messageID);
     var name = await Users.getNameUser(senderID);
-    return api.sendMessage({ body: `Người chơi ${name} đã vượt qua ${level} câu hỏi\nTiền thưởng hiện tại là ${equi(level)}$`, attachment: fs.createReadStream(__dirname + `/cache/info.png`)}, threadID, () => fs.unlinkSync(__dirname + `/cache/info.png`), messageID);
+    return api.sendMessage({ body: `Người chơi ${name} đã vượt qua ${level} câu hỏi\nTiền thưởng hiện tại là ${equi(level)}$`, attachment: fs.createReadStream(path2)}, threadID, () => fs.unlinkSync(path2), messageID);
   };
   
   if (type == "play") {
