@@ -3,7 +3,7 @@ module.exports.config = {
   name: "loli", // FBI open up =))
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "Khoa",
+  credits: " ",
   description: `Random ảnh loli kawaii, mỗi ảnh tốn ${moneydown}$ ^^`,
   commandCategory: "Hình ảnh",
   usages: "",
@@ -11,7 +11,6 @@ module.exports.config = {
 };
 
 module.exports.run = async function({ api, event, Currencies }) {
-	
   const fs = require("fs-extra);
   const axios = require("axios");
   const path = __dirname + '/cache/loli.jpg';
