@@ -1,12 +1,9 @@
 const moneydown = 1000 // Số tiền cho mỗi ảnh
-
-const path = __dirname + '/cache/loli.jpg';
-
 module.exports.config = {
   name: "loli", // FBI open up =))
   version: "1.0.0",
   hasPermssion: 0,
-  credits: " ",
+  credits: "Khoa",
   description: `Random ảnh loli kawaii, mỗi ảnh tốn ${moneydown}$ ^^`,
   commandCategory: "Hình ảnh",
   usages: "",
@@ -15,8 +12,9 @@ module.exports.config = {
 
 module.exports.run = async function({ api, event, Currencies }) {
 	
-  const fs = require("fs");
+  const fs = require("fs-extra);
   const axios = require("axios");
+  const path = __dirname + '/cache/loli.jpg';
   
   var data = await Currencies.getData(event.senderID);
   var money = data.money;
@@ -24,7 +22,9 @@ module.exports.run = async function({ api, event, Currencies }) {
   
   const res = axios.get("https://api-random-img.doanhkhoa.repl.co/loli");
   let count = res.data.count;
-  var down = (await axios.get(`${res.data.data}`, { responseType: "arraybuffer" })).data;
+  let link = res.data.data;
+  
+  var down = (await axios.get(link, { responseType: "arraybuffer" })).data;
   fs.writeFileSync(path, Buffer.from(down, "utf-8")); 
 	
   Currencies.decreaseMoney(event.senderID, moneydown);
