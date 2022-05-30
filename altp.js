@@ -1,5 +1,6 @@
 const moneydown = 1000; // Số tiền đăng kí chơi
-  
+// Hiện đã có v2.0.0 có thêm 3 quyền trợ giúp và nhiều tính năng khác, liên hệ Khoa để mua!
+
 const axios = require("axios");
 const fs = require("fs-extra");
 const request = require("request");
@@ -74,7 +75,7 @@ module.exports.handleReply = async function ({ event, Users, api, handleReply, C
 }
 
 module.exports.run = async function ({ api, event, args, Currencies, Users}) {
-  const threadSetting = global.data.threadData.get(threadID) || {};
+  const threadSetting = global.data.threadData.get(event.threadID) || {};
   var prefix = threadSetting.PREFIX || global.config.PREFIX;
   var { threadID, messageID, senderID } = event;
   const dataMoney = await Currencies.getData(senderID);
