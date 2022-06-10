@@ -32,6 +32,7 @@ function equi(level) {
   if (level == 12) var tienthuong = 40000;
   if (level == 13) var tienthuong = 80000;
   if (level == 14) var tienthuong = 150000;
+  if (level == 15) var tienthiong = 250000;
   return tienthuong;
 }
 
