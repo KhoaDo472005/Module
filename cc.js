@@ -1,9 +1,8 @@
 const axios = require("axios");
-const countStyle = 3; //Số style
 module.exports = {
   config: {
     name: "imagine",
-    aliases: ["midjourney", "openjourney", "text2image"],
+    aliases: [""],
     version: "1.0.0",
     author: "",
     countDown: 5,
