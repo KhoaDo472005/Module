@@ -1,4 +1,4 @@
-const moneydown = 1000 // Số tiền cho mỗi ảnh!
+const moneydown = 0 // Số tiền cho mỗi ảnh!
 module.exports.config = {
   name: "hololive",
   version: "1.0.0",
