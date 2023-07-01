@@ -31,12 +31,16 @@ async function draw(map,id) {
   ctx.drawImage(background, 0, 0, 1200, 1000);
   var texture1 = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/texture1.png");
   var texture2 = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/texture2.png");
+  var texture3 = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/texture3.png");
+  var texture4 = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/texture4.png");
   var co = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/co.png");
   for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 7; j++) {
       const o = map[i][j];
       if (o.opened) {
-        ctx.drawImage(texture2, 100+100*i, 800-100*j, 100, 100);
+        if ((i%2==0 && j%2==0) || (i%2==1 && j%2==1)) {
+          ctx.drawImage(texture2, 100+100*i, 800-100*j, 100, 100);
+        } else { ctx.drawImage(texture4, 100+100*i, 800-100*j, 100, 100); }
         if (o.isMine) {
           var mine = await loadImage("https://raw.githubusercontent.com/KhoaDo472005/minesweeper/main/bomb.png");
           ctx.drawImage(mine, 100+100*i, 800-100*j, 100, 100);
@@ -45,7 +49,9 @@ async function draw(map,id) {
           ctx.drawImage(number, 100+100*i, 800-100*j, 100, 100);
         }
 	  } else {
-        ctx.drawImage(texture1, 100+100*i, 800-100*j, 100, 100);
+        if ((i%2==0 && j%2==0) || (i%2==1 && j%2==1)) {
+          ctx.drawImage(texture1, 100+100*i, 800-100*j, 100, 100);
+        } else { ctx.drawImage(texture3, 100+100*i, 800-100*j, 100, 100); }
         if (o.markked) ctx.drawImage(co, 100+100*i, 800-100*j, 100, 100);
       }
     }
